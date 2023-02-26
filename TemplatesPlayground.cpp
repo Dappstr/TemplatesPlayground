@@ -39,6 +39,21 @@ void acc(T first, Ts... args) {
 
 }
 
+template <typename X>
+struct C {
+    X x {};
+    C() = default;
+
+    template <int N>
+    void f() {
+        std::cout << N << '\n';
+    }
+};
+
+template <typename X, int N>
+void print(const C<X>& c) {
+    c.template f<N>();
+}
 
 int main()
 {
