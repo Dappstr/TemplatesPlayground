@@ -55,12 +55,14 @@ void print(const C<X>& c) {
     c.template f<N>();
 }
 
+//in progress, just testing
 template <template <typename FRT> typename F, typename it>
 requires std::same_as<std::decay_t<F<void>>, std::function<void()>>
-void for_each(it begin, it end, F<int> f) {
+auto for_each(it begin, it end, F<int> f) -> decltype(auto) {
     for(; begin != end; begin++) {
         f(*begin);
     }
+    return f;
 }
 
 int main()
