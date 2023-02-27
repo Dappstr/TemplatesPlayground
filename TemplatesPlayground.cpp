@@ -58,9 +58,9 @@ void print(const C<X>& c) {
 //in progress, just testing
 template <template <typename FRT> typename F, typename it>
 requires std::same_as<std::decay_t<F<int>>, std::function<void()>>
-void for_each(it* begin, it* end, F<int>) {
-    for(auto indx = 0; begin < end; begin++) {
-
+void for_each(it begin, it end, F<int> f) {
+    for(; begin != end; begin++) {
+        f(*begin);
     }
 }
 
