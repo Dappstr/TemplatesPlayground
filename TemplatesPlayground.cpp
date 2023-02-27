@@ -65,8 +65,38 @@ auto for_each(it begin, it end, F<int> f) -> decltype(auto) {
     return f;
 }
 
-int main()
-{
+class S {
+    private:
+        std::vector<int> v{1, 2, 3, 4, 5};
+    public:
+        S() = default;
+        auto begin() {
+            return v.begin();
+        }
+        auto end() {
+            return v.end();
+        }
+        auto print() {
+            for_each(v.begin(), v.end(), [](int x) { std::cout << x << ' ';});
+        }
 
-    return 0;
+        template <int N>
+        auto ret_indx() {
+            return v.at(N);
+        }
+};
+
+template <typename T, int N>
+auto printindx(T& t) {
+    return t.template ret_indx<N>();
+}
+
+int main() {
+
+    S s;
+    for_each(s.begin(), s.end(), [&s] (int& x) mutable {x++;});
+    s.print();
+    std::cout << printindx<S, 3>(s);
+
+  return 0;
 }
